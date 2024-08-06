@@ -15,8 +15,7 @@ import hydra
 from omegaconf import OmegaConf, DictConfig
 import wandb
 
-import toxicity.train_dpo.trainers as trainers
-from toxicity.train_dpo.dpo_utils import (
+from dpo_utils import (
     get_local_dir,
     get_local_run_dir,
     disable_dropout,
@@ -59,6 +58,7 @@ def worker_main(
             name=config.exp_name,
         )
 
+    import toxicity.train_dpo.trainers as trainers
     TrainerClass = getattr(trainers, config.trainer)
     print(f"Creating trainer on process {rank} with world size {world_size}")
     trainer = TrainerClass(
